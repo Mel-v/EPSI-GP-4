@@ -22,14 +22,12 @@
         <div class="cart-total" id="cart-total">
             <strong>Total: $0.00</strong>
         </div>
+        <button id="goToOtherPage">Acceuil</button>
     </div>
 
     <script>
         const cartContainer = document.getElementById('cart-container');
         const cartTotal = document.getElementById('cart-total');
-
-        // Récupère le panier depuis le local storage lors du chargement de la page
-        const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
 
         // Fonction pour mettre à jour le panier et le total
         function updateCart() {
@@ -39,9 +37,8 @@
 
             cartItems.forEach(cartItem => {
                 const quantity = parseInt(cartItem.querySelector('input').value);
-                const price = parseFloat(cartItem.querySelector('.cart-price').innerText.slice(1));
+                const price = parseFloat(cartItem.querySelector('.cart-price').innerText.slice(1)); // Enlève le signe '$'
                 const subtotal = quantity * price;
-
                 cartItem.querySelector('.cart-subtotal').innerText = `$${subtotal.toFixed(2)}`;
                 total += subtotal;
 
@@ -69,16 +66,16 @@
         }
 
         // Création des articles du panier
-        function createCartItem(imageSrc, productName, price) {
+        function createCartItem(imageSrc, productName, price, savedQuantity) {
             const cartItem = document.createElement('div');
             cartItem.classList.add('cart-item');
             cartItem.innerHTML = `
                 <img src="${imageSrc}" alt="${productName}">
                 <span>${productName}</span>
                 <div class="cart-actions">
-                    <input type="number" value="1" min="1">
+                    <input type="number" value="${savedQuantity || 1}" min="1">
                     <span class="cart-price">$${price.toFixed(2)}</span>
-                    <span class="cart-subtotal">$${price.toFixed(2)}</span>
+                    <span class="cart-subtotal">$${(price * (savedQuantity || 1)).toFixed(2)}</span>
                     <button class="btn-remove">Supprimer</button>
                 </div>
             `;
@@ -91,13 +88,29 @@
             cartContainer.appendChild(cartItem);
         }
 
-        // Ajout des articles sauvegardés dans le local storage au panier
-        savedCart.forEach(item => {
-            createCartItem(item.imageSrc, item.productName, item.price);
-        });
+        // Récupère le panier depuis le local storage lors du chargement de la page
+        const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
 
-        // Met à jour le panier lors du chargement de la page
-        updateCart();
+        // Vérifie si des articles existent déjà dans le local storage
+        if (savedCart.length > 0) {
+            savedCart.forEach(item => {
+                createCartItem(item.imageSrc, item.productName, item.price, item.quantity);
+            });
+            // Met à jour le panier lors du chargement de la page
+            updateCart();
+        } else {
+            // Ajout des articles initiaux si le local storage est vide
+            createCartItem("produit1.jpg", "Produit 1", 20.00);
+            createCartItem("produit2.jpg", "Produit 2", 25.00);
+            createCartItem("produit3.jpg", "Produit 3", 30.00);
+        }
+
+        // Ajouter un gestionnaire d'événements pour le bouton "Aller à l'autre page"
+        const goToOtherPageButton = document.getElementById('goToOtherPage');
+        goToOtherPageButton.addEventListener('click', () => {
+            // Redirection vers une autre page
+            window.location.href = 'index.html';
+        });
     </script>
 </body>
 
