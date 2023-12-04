@@ -22,23 +22,48 @@
         <div class="cart-total" id="cart-total">
             <strong>Total: $0.00</strong>
         </div>
+        <!-- Bouton pour aller vers une autre page -->
+        <a href="autre_page.html">
+            <button>Page Suivante</button>
+        </a>
+
     </div>
 
     <script>
         const cartContainer = document.getElementById('cart-container');
         const cartTotal = document.getElementById('cart-total');
 
+        // Récupère le panier depuis le local storage lors du chargement de la page
+        const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+
         // Fonction pour mettre à jour le panier et le total
         function updateCart() {
             let total = 0;
             const cartItems = cartContainer.querySelectorAll('.cart-item');
+            const cartData = [];
+
             cartItems.forEach(cartItem => {
                 const quantity = parseInt(cartItem.querySelector('input').value);
-                const price = parseFloat(cartItem.querySelector('.cart-price').innerText.slice(1)); // Enlève le signe '$'
+                const price = parseFloat(cartItem.querySelector('.cart-price').innerText.slice(1));
                 const subtotal = quantity * price;
+
                 cartItem.querySelector('.cart-subtotal').innerText = `$${subtotal.toFixed(2)}`;
                 total += subtotal;
+
+                // Stocke les données de chaque article
+                const itemData = {
+                    imageSrc: cartItem.querySelector('img').src,
+                    productName: cartItem.querySelector('span').innerText,
+                    quantity: quantity,
+                    price: price,
+                    subtotal: subtotal
+                };
+                cartData.push(itemData);
             });
+
+            // Stocke le panier dans le local storage
+            localStorage.setItem('cart', JSON.stringify(cartData));
+
             cartTotal.innerHTML = `<strong>Total: $${total.toFixed(2)}</strong>`;
         }
 
@@ -71,10 +96,10 @@
             cartContainer.appendChild(cartItem);
         }
 
-        // Ajout des articles au panier
-        createCartItem("produit1.jpg", "Produit 1", 20.00);
-        createCartItem("produit2.jpg", "Produit 2", 25.00);
-        createCartItem("produit3.jpg", "Produit 3", 30.00);
+        // Ajout des articles sauvegardés dans le local storage au panier
+        savedCart.forEach(item => {
+            createCartItem(item.imageSrc, item.productName, item.price);
+        });
 
         // Met à jour le panier lors du chargement de la page
         updateCart();
