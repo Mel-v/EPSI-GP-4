@@ -22,12 +22,14 @@
         <div class="cart-total" id="cart-total">
             <strong>Total: $0.00</strong>
         </div>
-        <button id="goToOtherPage">Acceuil</button>
+        <button id="addToCart">Ajouter au panier</button>
+        <button id="goToHomePage">Accueil</button>
     </div>
 
     <script>
         const cartContainer = document.getElementById('cart-container');
         const cartTotal = document.getElementById('cart-total');
+        const addToCartButton = document.getElementById('addToCart');
 
         // Fonction pour mettre à jour le panier et le total
         function updateCart() {
@@ -105,10 +107,23 @@
             createCartItem("produit3.jpg", "Produit 3", 30.00);
         }
 
-        // Ajouter un gestionnaire d'événements pour le bouton "Aller à l'autre page"
-        const goToOtherPageButton = document.getElementById('goToOtherPage');
-        goToOtherPageButton.addEventListener('click', () => {
-            // Redirection vers une autre page
+        // Ajouter un gestionnaire d'événements pour le bouton "Ajouter au panier"
+        addToCartButton.addEventListener('click', () => {
+            // Ajoutez ici la logique pour ajouter un nouvel article au panier
+            // Vous pouvez créer un nouvel article en appelant createCartItem avec les détails de l'article
+            const newProduct = {
+                imageSrc: "nouveau_produit.jpg",
+                productName: "Nouveau Produit",
+                price: 15.00
+            };
+            createCartItem(newProduct.imageSrc, newProduct.productName, newProduct.price);
+            updateCart();
+        });
+
+        // Ajouter un gestionnaire d'événements pour le bouton "Accueil"
+        const goToHomePageButton = document.getElementById('goToHomePage');
+        goToHomePageButton.addEventListener('click', () => {
+            // Redirection vers la page d'accueil
             window.location.href = 'index.html';
         });
     </script>
