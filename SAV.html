@@ -1,12 +1,97 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 2em auto;
+            padding: 1em;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1,
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        
+        strong {
+            color: #333;
+        }
+        
+        .cart-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .cart-item img {
+            max-width: 100px;
+            margin-right: 20px;
+        }
+        
+        .cart-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        input {
+            width: 40px;
+            margin-right: 10px;
+        }
+        
+        .btn-remove {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
+        #addToCart,
+        #goToHomePage {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
     <title>Service Client - FAQ</title>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -27,7 +112,11 @@
                 <p>Le délai de livraison varie en fonction de votre emplacement. En général, les commandes arrivent dans un délai de [insérer délai estimé] jours ouvrables.</p>
             </div>
             <!-- Ajoutez d'autres questions et réponses ici -->
+
+            <!-- Ajout du bouton pour changer de page -->
+            <a href="index.html" id="Accueil">Accueil</a>
         </section>
     </div>
 </body>
+
 </html>
